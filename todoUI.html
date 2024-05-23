@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Todo App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #00c6ff,yellow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="button"], button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #0072ff;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        input[type="button"]:hover, button:hover {
+            background: #005bb5;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f1f1f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .buttons {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="inp" placeholder="Enter a task">
+        <input onclick="create()" type="button" id="btn" value="Add">
+        <button id="del" onclick="deleteAll()">Delete All</button>
+        <ul id="list"></ul>
+    </div>
+    <script>
+        let inp = document.querySelector('#inp');
+        let list = document.querySelector('#list');
+
+        function create() {
+            let li = document.createElement('li');
+            li.textContent = inp.value;
+
+            let btnDelete = document.createElement('button');
+            btnDelete.textContent = 'Delete';
+            btnDelete.onclick = function () {
+                li.remove();
+            };
+
+            let btnEdit = document.createElement('button');
+            btnEdit.textContent = 'Edit';
+            btnEdit.onclick = function () {
+                let text = prompt('Edit your task:', li.firstChild.textContent);
+                if (text) {
+                    li.firstChild.textContent = text;
+                }
+            };
+
+            let buttonContainer = document.createElement('div');
+            buttonContainer.className = 'buttons';
+            buttonContainer.appendChild(btnEdit);
+            buttonContainer.appendChild(btnDelete);
+
+            li.appendChild(buttonContainer);
+            list.appendChild(li);
+
+            inp.value = '';
+        }
+
+        function deleteAll() {
+            list.innerHTML = '';
+        }
+    </script>
+</body>
+</html>
